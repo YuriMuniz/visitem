@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Visitem</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/css/custom-index.css" />
+<!--fonts-->
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.css" />
+	<!-- Plugin CSS -->
+    <link rel="stylesheet" href="/css/device-mockups.min.css" />
+
+  </head>
+
+  <body id="page-top">
+  
+  
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" style="background-color:#003352;">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="/img/logo-3.fw.png" alt="Charity" /></a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="true" aria-label="Toggle navigation">
+          
+          <i class="fa fa-bars fa-1x"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#cadastrar">Cadastrar instituição</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#sobre">Como funciona</a>
+            </li>
+            
+            <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" style="background-color:#BBCC00;border-radius:15px;max-width:100px;text-align:center" href="/form-login" sec:authorize="!isAuthenticated()">Login <i class="fa fa-sign-in"></i></a>
+            <form th:action="@{/logout}" method="post">
+            <div class="form-group">
+						 <a href="/index"
+							sec:authorize="isAuthenticated()"><i class="fa fa-user fa-1x"></i></a>
+							
+					<!-- 	<button sec:authorize="isAuthenticated()" type="submit" class="btn btn-outline btn-xl">
+							<i class="fa fa-sign-out fa-2x"></i>
+						</button> -->
+						</div>
+					</form>
+            
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="masthead">
+      <div class="container h-100">
+        <div class="row h-100">
+          <div class="col-lg-7 my-auto">
+            <div class="header-content mx-auto">
+              <h4 class="mb-5" style="color:white;margin-top:80px">Quer ajudar alguém?</h4>
+              <h5 style="margin-top:-37px;color:#BBCC00	">Escolha o estado</h5>
+            <div  style="margin-bottom:140px;" >  
+              <select id="uf" class="form-control" style="border-radius: 15px;max-height:40px;max-width:500px;">
+				<option>Selecionar estado</option>
+				<option th:each="uf : ${T(com.ymg.visitem.entity.Estado).values()}" th:text="${uf.nome}"></option>
+			</select>	
+              <a href="/index" style="margin-top:10px;" class="btn btn-outline btn-xl"  onclick="setUf()">Ir <i class="fa fa-arrow-right"></i></a>
+              </div>
+              <div >
+              <h4 style="margin-top:-80px;color:white">Quer cadastrar sua instituição? </h4>
+              
+              <a href="#cadastrar" class="btn btn-outline btn-xl js-scroll-trigger"><i class="fa fa-arrow-down"></i></a>
+              </div>
+              
+              
+            </div>
+          </div>
+          <div class="col-lg-5 my-auto" >
+            <div class="device-container">
+              <div class="device-mockup iphone6_plus portrait white">
+                <div class="device">
+                  <div class="screen">
+                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
+                    <img id="img-3d" src="img/img-index.fw.png"  class="img-fluid" alt="" />
+                  </div>
+                  <div class="button">
+                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="download bg-primary text-center" id="cadastrar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 mx-auto">
+            <h2 class="section-heading">Cadastre sua instituição e faça parte de nossa rede! </h2>
+            <p>Primeiramente preencha e envie o formulário de cadastro, assim que possível retornaremos com mais informações! </p>
+            <div class="badges">
+              <a class="btn btn-outline btn-xl" href="/cadastrar-instituicao">Realizar cadastro</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+     <section class="contact" id="sobre">
+      <div class="container">
+	        <h2>Como funciona?</h2>
+	        <h4 style="color:black">Visitem vem com o intuito de facilitar o encontro de pessoas que estão hospedadas em asilos, creches
+e orfanatos com pessoas que estão dispostas a doar um pouco de seu tempo. De forma simples 
+o usuário terá acesso as informações sobre as instituições e seus hóspedes,
+ podendo assim escolher quem e como ajudar.   </h4>
+ <br />
+<a class="btn btn-outline btn-xl" href="/index"> Acesse</a>
+	        
+      </div>
+    </section>
+ 
+  
+
+   <!--  <section class="contact" id="sobre">
+      <div class="container">
+	        <h2>Compartilhe nas redes sociais.</h2>
+        <ul class="list-inline list-social">
+          <li class="list-inline-item social-twitter">
+            <a href="#">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li class="list-inline-item social-facebook">
+            <a href="#">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li class="list-inline-item social-google-plus">
+            <a href="#">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section> -->
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2018 Visitem.</p>
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <a href="#">Termos e condições</a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#">Privacidade</a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#">Contato</a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+
+   <!--  
+   
+     
+      -->
+     <script src="/js/jquery.min.js"></script>
+     <script src="/js/bootstrap.min.js"></script>
+     <script src="/js/usuario.js"></script>
+      
+<!-- 
+
+    Plugin JavaScript
+    <script src="/js/templa.js"></script>
+    <script src="/js/jquery.easing.min.js"></script>
+<script src="/js/pooper.js"></script>
+    Custom scripts for this template
+    -->
+
+  </body>
+
+</html>

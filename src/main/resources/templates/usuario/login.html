@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Login
+
+</title>
+	
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/custom-index.css" />
+<link rel="stylesheet" type="text/css" href="/css/custom-form-login.css" />
+<!--fonts-->
+<link rel="stylesheet" type="text/css" href="/css/font-awesome.css" />
+
+</head>
+
+<body class="fundo" style="margin-top:-100px">
+
+
+
+<div id="logo" class="col-md-1 col-md-offset-4">
+ <a href="index.html" class="logo"  style="margin-left:60px" ><img src="/img/logo-3.fw.png" alt="Charity" /></a>
+ </div>
+<div class="col-md-5 col-md-offset-4">
+
+<div class="box card-5" id="box-login">
+
+
+<div id="wrapper-login">
+<div sec:authorize="isAuthenticated()"> <h4 class="text-uppercase" id="msg-ja-logado" style="color:black">Você já está logado!</h4></div>
+  <div class="text-center" sec:authorize="!isAuthenticated()"><h3 class="text-uppercase title">Login</h3>
+  <a id="voltar-escolha-usuario" style="color:black" class="tohide" href="#"><i class="fa fa-arrow-left pull-left"></i></a>
+   <hr />
+   <div id="btn-type-user">
+   <h4 class="title" style="margin-top:15px;">É necessário fazer login.</h4>
+   <h5 style="text-align:center"> Você é um usuário ou uma instituição?</h5>
+   <button id="btn-usuario-form" sec:authorize="!isAuthenticated()" style="margin-top:20px;"  type="submit" class="btn btn-outline btn-xl">Usuário</button>
+   <button id="btn-instituicao-form" sec:authorize="!isAuthenticated()" style="margin-top:20px;" type="submit" class="btn btn-outline btn-xl">Instituição</button>
+   </div>
+   
+   
+   <div id="login-instituicao" class="tohide" style="margin-top:15px;" >
+   <div th:if="${message != null}" class="alert alert-danger">
+						<p th:text="${message}"></p>
+						
+						<script>
+						$("#btn-type-user").addClass("tohide");
+						$("#login-user").addClass("tohide");
+						$("#login-instituicao").removeClass("tohide");
+						$("#voltar-escolha-usuario").removeClass("tohide");
+						
+						</script>
+	</div>
+   
+   <div style="margin-bottom:10px;" class="form-group support-links"><span>Não possui uma conta? </span> <a href="/register" class="-separator text-uppercase">Cadastre-se</a></div>
+    <form th:action="@{/form-login}" method="post" >
+    	<small><a id="esq-senha" href="/instituicao/esqueci-senha" style="margin-right:-200px;"  sec:authorize="!isAuthenticated()">Esqueci a senha</a></small>
+          <div class="form-group input-group" sec:authorize="!isAuthenticated()">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input class="form-control" type="text" id="username" name="username" placeholder="nome do usuario"/>          
+          </div>
+          <div class="form-group input-group" sec:authorize="!isAuthenticated()">
+            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+            <input class="form-control" type="password" placeholder="senha"  id="password" name="password" />     
+          </div>
+          <div class="form-group">
+            <button sec:authorize="!isAuthenticated()" type="submit" class="btn btn-outline btn-xl">Fazer login</button>
+          </div>
+          
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>    
+   </div>
+   <div id="login-user" class="tohide" style="margin-top:30px">
+   		<form action="/connect/facebook" method="POST">
+			<input type="hidden" name="scope" value="email, user_posts" />
+			
+			<button class="btn btn-outline btn-xl"  type="submit"><i class="fa fa-facebook-square fa-2x pull-left" style=""></i>Continuar com o facebook</button>
+		</form>
+		</div>	
+   </div>
+</div>
+</div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/form-login.js"></script>	
+
+
+</body>
+
+</html>
